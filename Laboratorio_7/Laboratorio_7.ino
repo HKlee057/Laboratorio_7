@@ -27,14 +27,11 @@ void setup() {
   Serial.println("");
   Serial.println("Please enter your character");
   Serial.println("");
-  Serial.println("METROID");
+  Serial.println("Vader");
   Serial.println("");
-  Serial.println("LINK");
+  Serial.println("R2D2");
   Serial.println("");
-  Serial.println("WALUIGI");  
-  
-
-
+  Serial.println("MegaMan");  
 }
 
 void loop() {
