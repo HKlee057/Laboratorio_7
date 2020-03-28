@@ -4,25 +4,38 @@
  17118
  */
 
+/***********************************************************
+ * Librerías 
+ ***********************************************************/
 #include <SPI.h>
 #include <SD.h>
 
+/***********************************************************
+ * Variables
+ ***********************************************************/
 File myFile;
 String x = "";
 int i = 0;
+/***********************************************************
+ * Void de inicio 
+ ***********************************************************/
 void setup() {
-  // Open serial communications and wait for port to open:
+  // Inicio de comunicación serial con un baudrate de 9600 
   Serial.begin(9600);
+  // Definición de módulo SPI a utilizar
   SPI.setModule(0);
 
   while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
+    ; // Espera a conexión serial
   }
+  // Despliegue de estado de lectura
   Serial.print("Iniciando tarjeta SD...");
   if (!SD.begin(4)) {
+    // Mensaje en caso de inicio de inicialización fallida
     Serial.println("¡Inicialización fallida!");
     while (1);
   }
+  // Al completar la inicialización de la tarjeta despliega el siguiente menú
   Serial.println("Inicialización completada.");
   Serial.println("");
   Serial.println("Ingrese alguno de los siguientes:");
@@ -35,25 +48,35 @@ void setup() {
   Serial.println("");
   Serial.println("-END (para cerrar)"); 
 }
-
+/***********************************************************
+ * Void de infinito 
+ ***********************************************************/
 void loop() {
+    //Mientras esté disponible la comunicación, verificar esta condición
     while (Serial.available()){
+      // Guarda valor leído en variable character
       char character = Serial.read();
+      // En caso de no corresponder a uno de las opción, concatena los valores 
       if (character != '\n'){
         x.concat(character);
       }
-    } 
+    }
+  //*****************************************************************************   
+  // En caso de elegir la imágen de Darth Vader, realizar lo siguiente  
   if(x=="VADER"){
-    // re-open the file for reading:
+    // Abrir el archivo deseado
     myFile = SD.open("VADER.txt");
+    // Si se cumple la condión de tener un archivo con el nombre indicado
     if (myFile) {
       Serial.println("Desplegando a Darth Vader:");
-      // read from the file until there's nothing else in it:
+      // Leer el archivo por completo
       while (myFile.available()) {
+        // Desplegar el archivo leído en el monitor
         Serial.write(myFile.read());
       }
-      // close the file:
+      // Cerrar el archivo
       myFile.close();
+      // Desplegar menú nuevamente
       Serial.println("");
       Serial.println("Ingrese alguno de los siguientes:");
       Serial.println("");
@@ -64,24 +87,30 @@ void loop() {
       Serial.println("-MEGAMAN");  
       Serial.println("");
       Serial.println("-END (para cerrar)"); 
-      x = ""; //Limpia la variable inicial
+      // Limpia la variable inicial
+      x = ""; 
     } 
     else {
-      // if the file didn't open, print an error:
+      // Si el archivo no se abre, desplegar mensaje de error
       Serial.println("Error desplegando el archivo.");
     }
   }
-    if(x=="R2D2"){
-    // re-open the file for reading:
+  //*****************************************************************************
+  // En caso de elegir la imágen de R2-D2, realizar lo siguiente  
+  if(x=="R2D2"){
+    // Abrir el archivo deseado
     myFile = SD.open("R2D2.txt");
+    // Si se cumple la condión de tener un archivo con el nombre indicado
     if (myFile) {
       Serial.println("Desplegando a R2-D2:");
-      // read from the file until there's nothing else in it:
+      // Leer el archivo por completo
       while (myFile.available()) {
+        // Desplegar el archivo leído en el monitor
         Serial.write(myFile.read());
       }
-      // close the file:
+      // Cerrar el archivo
       myFile.close();
+      // Desplegar menú nuevamente
       Serial.println("");
       Serial.println("Ingrese alguno de los siguientes:");
       Serial.println("");
@@ -92,24 +121,30 @@ void loop() {
       Serial.println("-MEGAMAN");  
       Serial.println("");
       Serial.println("-END (para cerrar)"); 
-      x = ""; //Limpia la variable inicial
+      // Limpia la variable inicial
+      x = ""; 
     } 
     else {
-      // if the file didn't open, print an error:
+      // Si el archivo no se abre, desplegar mensaje de error
       Serial.println("Error desplegando el archivo.");
     }
   }
-    if(x=="MEGAMAN"){
-    // re-open the file for reading:
+  //*****************************************************************************
+  // En caso de elegir la imágen de MegaMan, realizar lo siguiente  
+  if(x=="MEGAMAN"){
+    // Abrir el archivo deseado
     myFile = SD.open("MEGAMAN.txt");
+    // Si se cumple la condión de tener un archivo con el nombre indicado
     if (myFile) {
       Serial.println("Desplegando a MegaMan:");
-      // read from the file until there's nothing else in it:
+      // Leer el archivo por completo
       while (myFile.available()) {
+        // Desplegar el archivo leído en el monitor
         Serial.write(myFile.read());
       }
-      // close the file:
+      // Cerrar el archivo
       myFile.close();
+      // Desplegar menú nuevamente
       Serial.println("");
       Serial.println("Ingrese alguno de los siguientes:");
       Serial.println("");
@@ -120,18 +155,25 @@ void loop() {
       Serial.println("-MEGAMAN");  
       Serial.println("");
       Serial.println("-END (para cerrar)"); 
-      x = ""; //Limpia la variable inicial
+      // Limpia la variable inicial
+      x = ""; 
     } 
     else {
-      // if the file didn't open, print an error:
+      // Si el archivo no se abre, desplegar mensaje de error
       Serial.println("Error desplegando el archivo.");
     }
   }
+  //*****************************************************************************
+  // En caso de elegir la opción de finalizado, realizar lo siguiente  
   if(x=="END"){
-      if(i<1){
-        i++;
-        Serial.println("Adiós.");
-        }
-      Serial.end();
+    // Verificar si la variable de conteo es menor que 1
+    if(i<1){
+      // Sumar la variable de conteo
+      i++;
+      // Desplegar mensaje de despedida
+      Serial.println("Adiós.");
+      }
+    // Finalizar comunicación serial  
+    Serial.end();
   }
 }
