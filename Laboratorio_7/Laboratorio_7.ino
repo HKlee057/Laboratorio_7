@@ -1,5 +1,5 @@
 /*
- Laboratorio 4 - Electrónica Digital 2
+ Laboratorio 7 - Electrónica Digital 2
  Hector A. Klée González
  17118
  */
